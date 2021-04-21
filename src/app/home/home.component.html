@@ -1,0 +1,141 @@
+<div class="container">
+  <form [formGroup]="searchForm">
+    <div class="input-group">
+      <label class="input-group__label" for="search">search </label>
+      <input
+        type="search"
+        id="search"
+        class="form-control"
+        placeholder="search"
+        aria-label="search"
+        autocomplete="off"
+        aria-describedby="icon"
+        formControlName="search"
+      />
+    </div>
+  </form>
+  <section>
+    <div class="row">
+      <div class="col-lg">
+        <h3 style="margin-bottom: 10px">ToDo Lists</h3>
+        <div *ngIf="lists">
+          <div class="input-group" *ngFor="let list of lists; let i = index">
+            <div class="input-group-text">
+              <input
+                class=""
+                type="checkbox"
+                (change)="toggleVisibility($event, i)"
+              />
+            </div>
+
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                style="cursor: pointer"
+                (click)="onEdit(i)"
+              >
+                <div style="margin-right: auto; margin-left: 10px">
+                  <div style="font-weight: bold">{{ list.title }}</div>
+                  {{ list.description }}
+                </div>
+
+                <div class="status">
+                  <span
+                    class="badge"
+                    [ngStyle]="{
+                      'background-color': 'blue'
+                    }"
+                    >{{ list.status }}</span
+                  >
+                  <span class="">{{ list.deadline | date }}</span>
+                </div>
+              </li>
+            </ul>
+            <span
+              (click)="onDelete(i)"
+              style="
+                font-size: 30px;
+                cursor: pointer;
+                margin-top: inherit;
+                margin-left: 10px;
+              "
+              aria-hidden="true"
+              >&times;</span
+            >
+          </div>
+        </div>
+        <div *ngIf="!lists">
+          <h3>No ToDos Found</h3>
+        </div>
+        <div>
+          <ul style="margin: 10px auto" class="pagination">
+            <li class="prev"><a>&laquo;</a></li>
+            <li class="pageNum active"><a>1</a></li>
+            <li class="pageNum"><a>2</a></li>
+            <li class="pageNum"><a>3</a></li>
+            <li class="pageNum"><a>4</a></li>
+            <li class="pageNum"><a>5</a></li>
+            <li class="pageNum"><a>6</a></li>
+            <li class="next"><a>&raquo;</a></li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="editMode" class="col-lg">
+        <h3 class="mb-2">Edit List</h3>
+        <form [formGroup]="listForm">
+          <div style="margin-bottom: 15px">
+            <label for="title" class="form-label">title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              placeholder="title"
+              formControlName="title"
+            />
+          </div>
+          <div style="margin-bottom: 15px">
+            <label for="description" class="form-label">description</label>
+            <textarea
+              class="form-control"
+              placeholder="write your desc here"
+              id="description"
+              rows="3"
+              formControlName="description"
+            ></textarea>
+          </div>
+          <div style="margin-bottom: 15px">
+            <label for="status" class="form-label">Status</label>
+            <select
+              id="status"
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="status"
+            >
+              <option selected>select status</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+              <option value="missed">Missed</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 15px">
+            <label for="deadline" class="form-label">deadline</label>
+            <input
+              class="form-control"
+              placeholder="write your desc here"
+              id="deadline"
+              type="text"
+              formControlName="deadline"
+            />
+          </div>
+          <button
+            class="btn"
+            [disabled]="listForm.invalid"
+            (click)="onUpdate()"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

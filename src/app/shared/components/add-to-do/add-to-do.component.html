@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row">
+    <div class="main">
+      <h3 class="mb-2">Add ToDo</h3>
+      <form [formGroup]="listData">
+        <div style="margin-bottom: 15px">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="title"
+            id="title"
+            formControlName="title"
+            autocomplete="off"
+            required
+          />
+          <div *ngIf="title.invalid && (title.dirty || title.touched)">
+            <!-- <small *ngIf="title.errors.required"> title is required. </small>
+            <small *ngIf="title.errors.minlength">
+              title must be at least 4 characters long.
+            </small> -->
+          </div>
+        </div>
+        <div style="margin-bottom: 15px">
+          <label for="description" class="form-label">description</label>
+          <textarea
+            class="form-control"
+            placeholder="write your desc here"
+            id="description"
+            rows="3"
+            formControlName="description"
+            required
+          ></textarea>
+          <div
+            *ngIf="
+              description.invalid && (description.dirty || description.touched)
+            "
+          >
+            <!-- <small *ngIf="title.errors.required">
+              description is required.
+            </small> -->
+          </div>
+        </div>
+        <div style="margin-bottom: 15px">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="createdAt"
+            required
+            hidden
+          />
+        </div>
+        <div style="margin-bottom: 15px">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="updatedAt"
+            required
+            hidden
+          />
+        </div>
+        <div style="margin-bottom: 15px">
+          <input
+            type="date"
+            class="form-control"
+            formControlName="status"
+            required
+            hidden
+          />
+        </div>
+        <div style="margin-bottom: 15px">
+          <input
+            class="form-control"
+            formControlName="deadline"
+            type="date"
+            required
+          />
+        </div>
+        <button class="btn" (click)="onAdd()" type="submit">Add ToDo</button>
+      </form>
+    </div>
+  </div>
+</div>
