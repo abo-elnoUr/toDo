@@ -30,6 +30,13 @@ nav {
 				font-size: 17px;
 				text-transform: uppercase;
 				padding: 7px 13px;
+        &.active {
+          color: #111 !important;
+        }
+        &:hover
+        {
+          color: #999 !important;
+        }
 			}
 		}
 	}
@@ -44,14 +51,9 @@ label.logo {
 		color: #fff;
 	}
 }
-a.active {
-	color: #000;
-	transition: .5s ease;
-}
-.hover {
-	color: #000;
-	transition: .5s ease;
-}
+
+
+
 .checkbtn {
 	font-size: 30px;
 	color: #fff;
@@ -111,17 +113,16 @@ a.active {
 				a {
 					font-size: 20px;
 				}
+        &:hover {
+          color: none;
+        }
+        &:active {
+          color: none;
+        }
 			}
 		}
 	}
-	a {
-		&:hover {
-			color: none;
-		}
-	}
-	a.active {
-		color: none;
-	}
+
 	#check {
 		&:checked {
 			~ {

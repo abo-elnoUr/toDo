@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { TodoService } from './../core/services/todo.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToDo } from '../shared/models/todo.model';
-import { FormGroup, FormControl, Validators, NgModel } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import { FormGroup, FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +12,9 @@ import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  editMode:boolean = false;
+
+  // declartion
+
   lists: ToDo[]=[];
   list: any = [];
   index : number = 0;
@@ -20,36 +22,44 @@ export class HomeComponent implements OnInit {
   marked = false;
   usersArray: [] = [];
   search: string = '';
-  index_mine:number = 0;
+  status : string = '';
+  activeLinkStyle = 'line-through';
+  start : number = 0;
+  end : number = 3;
+  num:number[] = [];
+  result : number = 0;
+  i : number = 0;
+  j : number = 0;
+  m : number = 0;
+  f : number = 0;
 
 
-  @ViewChild('searchElem') searchElem!: NgModel;
 
-  constructor(private _ToDoService:TodoService) {
+  constructor(private _ToDoService:TodoService, private _Router: Router) {
 
   }
 
-  get title() { return this.listForm.get('title') as FormControl }
-  get description() { return this.listForm.get('description') as FormControl }
-
-  listForm = new FormGroup({
-    title : new FormControl('', [Validators.required,Validators.minLength(4)]),
-    description: new FormControl('', Validators.required),
-    createdAt: new FormControl(),
-    updatedAt: new FormControl(new Date()),
-    status: new FormControl(),
-    deadline : new FormControl()
-  })
+  // froms in reactive form
 
   searchForm = new FormGroup({
     search : new FormControl()
   })
 
+  toggleForm = new FormGroup({
+    toggle : new FormControl(null)
+  })
+
+
+
   ngOnInit(): void {
+    // get all todos
+
     this.lists = this._ToDoService.getToDos();
     this._ToDoService.insertedList.subscribe(result => {
       this.lists = result;
     })
+
+
     this.searchForm.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe((wrod) => {
       if (wrod.search) {
         this.lists = this.getToDoBySearch(this.lists, wrod.search);
@@ -58,23 +68,26 @@ export class HomeComponent implements OnInit {
         this.lists = this._ToDoService.getToDos();
         this._ToDoService.insertedList.subscribe(result => {
           this.lists = result;
-          console.log('null')
         })
 
       }
     });
+
+    // change status value depending on time
+
     // for(let i =0; i< this.lists.length; i++)
     // {
-    //   if(this.lists[i].status === 'pending')
+    //   if(this.lists[i].status === 0)
     //   {
     //     setInterval(() => this._ToDoService.missedStatus(i), 5000);
     //   }
-    //   if(this.lists[i].status === 'done') {
+    //   if(this.lists[i].status === 1) {
     //     this.lists[i].status = 'done'
     //     }
     // }
   }
 
+  // search in todo by word
 
   getToDoBySearch(list: ToDo[],word: string)
   {
@@ -84,7 +97,7 @@ export class HomeComponent implements OnInit {
     const searchArray = [];
     for (let item of list)
     {
-      if (item['title'] === word)
+      if (item['title'].includes(word))
       {
         searchArray.push(item);
       }
@@ -92,45 +105,31 @@ export class HomeComponent implements OnInit {
     return searchArray;
   }
 
+  // navigate to edit page with id
+
   onEdit(index: number)
   {
-    this.editMode = true;
-    this.index = index;
-    this.list = this.lists[index];
-    this.listForm.patchValue({
-      title: this.list.title,
-      description: this.list.description,
-      status : this.list.status,
-      createdAt : this.list.createdAt,
-      deadline : this.list.deadline
-    })
-
+    this._Router.navigate(['edit/'+index])
   }
 
-  onUpdate()
-  {
-    this._ToDoService.updateList(this.index, this.listForm.value);
-    this.lists = this._ToDoService.getToDos();
-    this._ToDoService.insertedList.subscribe(result => {
-      this.lists = result;
-    })
-    this.editMode = false;
-  }
+  // change status of todo
 
-  toggleVisibility(e:any,index:number){
+  toggleVisibility(e:any,id:number){
     this.marked= e.target.checked;
     if (this.marked == true) {
-      this._ToDoService.doneStatus(index)
+      this._ToDoService.doneStatus(id);
     }
     else
     {
-      this._ToDoService.pendingStatus(index)
+      this._ToDoService.pendingStatus(id);
     }
   }
 
-  onDelete(index: number)
+  // delete todo from todos
+
+  onDelete(id: number)
   {
-    this._ToDoService.onDeleteToDo(index);
+    this._ToDoService.onDeleteToDo(id);
     this.lists = this._ToDoService.getToDos();
     this._ToDoService.insertedList.subscribe(result => {
       this.lists = result;
@@ -138,18 +137,21 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getColor() {
-    let color = 'blue';
-    if (this.listForm.value.status === 'pending') {
-      color = 'blue';
+  numberArray(length: number)
+  {
+    this.i = length / 3;
+    this.j = length % 3;
+    this.m = Math.round(this.i);
+    if (this.j <= 5) {
+      this.f = this.m + 1;
     }
-    if (this.listForm.value.status === 'done') {
-      color = 'green';
-    }
-    if (this.listForm.value.status === 'missed') {
-      color = 'red';
-    }
-    return color;
+    return new Array(this.f)
+  }
+
+  changeNumber(number : number)
+  {
+    this.start = number * 3;
+    this.end = this.start + 3;
   }
 
 }

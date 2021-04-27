@@ -34,7 +34,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./src/app/home/pagination.js"
             ]
           },
           "configurations": {

@@ -1,4 +1,6 @@
 <div class="container">
+  <!-- search in todos -->
+
   <form [formGroup]="searchForm">
     <div class="input-group">
       <label class="input-group__label" for="search">search </label>
@@ -18,24 +20,42 @@
     <div class="row">
       <div class="col-lg">
         <h3 style="margin-bottom: 10px">ToDo Lists</h3>
-        <div *ngIf="lists">
-          <div class="input-group" *ngFor="let list of lists; let i = index">
+        <div *ngIf="lists.length > 0">
+          <!-- show all todo lists -->
+
+          <div
+            class="input-group"
+            *ngFor="let list of lists | slice: start:end; let i = index"
+          >
             <div class="input-group-text">
-              <input
-                class=""
-                type="checkbox"
-                (change)="toggleVisibility($event, i)"
-              />
+              <form [formGroup]="toggleForm">
+                <input
+                  type="checkbox"
+                  (change)="toggleVisibility($event, list.id)"
+                  formControlName="toggle"
+                  [checked]="list.status == 1"
+                />
+              </form>
             </div>
+
+            <!-- todo sample with unoreder list -->
 
             <ul class="list-group">
               <li
                 class="list-group-item"
                 style="cursor: pointer"
-                (click)="onEdit(i)"
+                (click)="onEdit(list.id)"
               >
+                <span hidden>{{ list.id }}</span>
                 <div style="margin-right: auto; margin-left: 10px">
-                  <div style="font-weight: bold">{{ list.title }}</div>
+                  <div
+                    [style.text-decoration]="
+                      list.status == 1 ? activeLinkStyle : null
+                    "
+                    style="font-weight: bold"
+                  >
+                    {{ list.title }}
+                  </div>
                   {{ list.description }}
                 </div>
 
@@ -45,14 +65,34 @@
                     [ngStyle]="{
                       'background-color': 'blue'
                     }"
-                    >{{ list.status }}</span
+                    *ngIf="list.status === 0"
+                    >pending</span
+                  >
+                  <span
+                    class="badge"
+                    [ngStyle]="{
+                      'background-color': 'blue'
+                    }"
+                    *ngIf="list.status === 1"
+                    >done</span
+                  >
+                  <span
+                    class="badge"
+                    [ngStyle]="{
+                      'background-color': 'blue'
+                    }"
+                    *ngIf="list.status === 2"
+                    >missed</span
                   >
                   <span class="">{{ list.deadline | date }}</span>
                 </div>
               </li>
             </ul>
+
+            <!-- delete button -->
+
             <span
-              (click)="onDelete(i)"
+              (click)="onDelete(list.id)"
               style="
                 font-size: 30px;
                 cursor: pointer;
@@ -64,77 +104,30 @@
             >
           </div>
         </div>
-        <div *ngIf="!lists">
-          <h3>No ToDos Found</h3>
+
+        <!-- if no todos return -->
+
+        <div *ngIf="lists.length <= 0">
+          <h4 style="letter-spacing: 2px; font-weight: 500">
+            No ToDos Added Please Add Some 💛🖤
+          </h4>
         </div>
-        <div>
+
+        <!-- pagination -->
+
+        <div *ngIf="lists.length > 0">
           <ul style="margin: 10px auto" class="pagination">
             <li class="prev"><a>&laquo;</a></li>
-            <li class="pageNum active"><a>1</a></li>
-            <li class="pageNum"><a>2</a></li>
-            <li class="pageNum"><a>3</a></li>
-            <li class="pageNum"><a>4</a></li>
-            <li class="pageNum"><a>5</a></li>
-            <li class="pageNum"><a>6</a></li>
+            <li
+              *ngFor="let todo of numberArray(lists.length); let i = index"
+              class="pageNum active"
+              (click)="changeNumber(i)"
+            >
+              <a>{{ i + 1 }}</a>
+            </li>
             <li class="next"><a>&raquo;</a></li>
           </ul>
         </div>
-      </div>
-      <div *ngIf="editMode" class="col-lg">
-        <h3 class="mb-2">Edit List</h3>
-        <form [formGroup]="listForm">
-          <div style="margin-bottom: 15px">
-            <label for="title" class="form-label">title</label>
-            <input
-              type="text"
-              class="form-control"
-              id="title"
-              placeholder="title"
-              formControlName="title"
-            />
-          </div>
-          <div style="margin-bottom: 15px">
-            <label for="description" class="form-label">description</label>
-            <textarea
-              class="form-control"
-              placeholder="write your desc here"
-              id="description"
-              rows="3"
-              formControlName="description"
-            ></textarea>
-          </div>
-          <div style="margin-bottom: 15px">
-            <label for="status" class="form-label">Status</label>
-            <select
-              id="status"
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="status"
-            >
-              <option selected>select status</option>
-              <option value="pending">Pending</option>
-              <option value="done">Done</option>
-              <option value="missed">Missed</option>
-            </select>
-          </div>
-          <div style="margin-bottom: 15px">
-            <label for="deadline" class="form-label">deadline</label>
-            <input
-              class="form-control"
-              placeholder="write your desc here"
-              id="deadline"
-              type="text"
-              formControlName="deadline"
-            />
-          </div>
-          <button
-            class="btn"
-            [disabled]="listForm.invalid"
-            (click)="onUpdate()"
-          >
-            Update
-          </button>
-        </form>
       </div>
     </div>
   </section>

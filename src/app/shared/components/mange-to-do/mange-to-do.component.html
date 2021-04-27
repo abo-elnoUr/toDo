@@ -1,21 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="main">
-      <h3 class="mb-2">Add ToDo</h3>
+    <div class="col-lg main">
+      <h3 class="mb-2">Edit List</h3>
 
-      <!-- add form to add new todo -->
+      <!-- edit form to edit each todo -->
 
-      <form [formGroup]="listData">
+      <form [formGroup]="listForm">
+        <input type="number" hidden formControlName="id" />
+
         <div style="margin-bottom: 15px">
-          <label for="title" class="form-label">Title</label>
+          <label for="title" class="form-label">title</label>
           <input
             type="text"
             class="form-control"
-            placeholder="title"
             id="title"
+            placeholder="title"
             formControlName="title"
             autocomplete="off"
-            required
           />
           <div
             *ngIf="
@@ -40,7 +41,7 @@
             id="description"
             rows="3"
             formControlName="description"
-            required
+            autocomplete="off"
           ></textarea>
           <div
             *ngIf="
@@ -56,43 +57,39 @@
         </div>
 
         <div style="margin-bottom: 15px">
-          <input
-            type="date"
-            class="form-control"
-            formControlName="createdAt"
-            required
-            hidden
-          />
-        </div>
-
-        <div style="margin-bottom: 15px">
-          <input
-            type="date"
-            class="form-control"
-            formControlName="updatedAt"
-            required
-            hidden
-          />
-        </div>
-
-        <div style="margin-bottom: 15px">
-          <input
-            type="date"
-            class="form-control"
+          <label for="status" class="form-label">Status</label>
+          <select
+            id="status"
+            class="form-select"
+            aria-label="Default select example"
             formControlName="status"
-            required
-            hidden
-          />
+            type="number"
+          >
+            <option selected disabled>select status</option>
+            <option value="0">Pending</option>
+            <option value="1">Done</option>
+            <option disabled value="2">Missed</option>
+          </select>
+          <div
+            *ngIf="
+              listFormValidate.status.invalid &&
+              (listFormValidate.status.dirty || listFormValidate.status.touched)
+            "
+          >
+            <small *ngIf="listFormValidate.status.errors?.required"
+              >status required</small
+            >
+          </div>
         </div>
 
         <div style="margin-bottom: 15px">
           <label for="deadline" class="form-label">deadline</label>
           <input
             class="form-control"
-            formControlName="deadline"
-            type="date"
-            required
+            placeholder="deadline date"
             id="deadline"
+            type="text"
+            formControlName="deadline"
           />
           <div
             *ngIf="
@@ -107,15 +104,15 @@
           </div>
         </div>
 
-        <!-- submit button to add todo -->
+        <!-- submit edited todo -->
 
         <button
-          class="btn"
-          [disabled]="listData.invalid"
-          (click)="onAdd()"
           type="submit"
+          class="btn"
+          [disabled]="listForm.invalid"
+          (click)="onUpdate()"
         >
-          Add ToDo
+          Update
         </button>
       </form>
     </div>

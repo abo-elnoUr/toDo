@@ -1,72 +1,116 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ToDo } from 'src/app/shared/models/todo.model';
+import { ToDo, Status } from 'src/app/shared/models/todo.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
+  // declartion
+
   date = new Date();
   insertedList = new EventEmitter<ToDo[]>();
+  list :ToDo[] = [];
+  lastId: number = 0;
+
+  // lists dumy data
 
   private lists: ToDo[] = [
-    {title : 'study',
-    description : 'Start study Tomorrow',
-    status : 'pending',
-    createdAt : this.date,
-    updatedAt : this.date,
-    deadline : this.date
-  }
+  //   {id: 1,
+  //   title : 'study',
+  //   description : 'Start study Tomorrow',
+  //   status : Status.pending,
+  //   createdAt : this.date,
+  //   updatedAt : this.date,
+  //   deadline : this.date
+  // },
+  // {id: 2,
+  //   title : 'play',
+  //   description : 'Start play now',
+  //   status : Status.done,
+  //   createdAt : this.date,
+  //   updatedAt : this.date,
+  //   deadline : this.date
+  // },
+  // {id: 3,
+  //   title : 'Sports',
+  //   description : 'sports',
+  //   status : Status.missed,
+  //   createdAt : this.date,
+  //   updatedAt : this.date,
+  //   deadline : this.date
+  // }
+
   ];
 
 
   constructor() { }
 
-  getToDos()
+  // get all todos
+
+  getToDos(id?: number)
   {
-    return this.lists.slice();
+      return this.lists.slice();
   }
+
+  // add todo to todos
 
   addToDo(list : ToDo)
   {
-    return this.lists.push(list);
-  }
-
-  getToDoBySearch(word: ToDo)
-  {
-    return of(this.lists.filter(w => w === word));
-  }
-
-
-  getWithIndex(index:number)
-  {
-    return this.lists[index]
-  }
-
-  updateList(index: number, data: ToDo)
-  {
-    return this.lists[index] = data;
-  }
-
-  doneStatus(index: number)
-  {
-    return this.lists[index].status = 'done';
-  }
-  pendingStatus(index: number)
-  {
-    return this.lists[index].status = 'pending';
-  }
-
-  missedStatus(index:number)
-  {
-    return this.lists[index].status = 'missed';
-  }
-
-  onDeleteToDo(index:number)
-  {
-    if (index > -1) {
-       this.lists.splice(index,1)
+    if (!list.id) {
+      list.id = ++this.lastId;
     }
+    this.lists.push(list);
+    return this;
+  }
+
+  // get todo by id
+
+  getById(id:number)
+  {
+    return this.lists.filter(list => list.id == id);
+  }
+
+  // update todo
+
+  updateList(id: number, data: ToDo)
+  {
+    let todo = this.getById(id).pop();
+    Object.assign(todo, data);
+    return todo;
+  }
+
+  // change status of todo
+
+  doneStatus(id: number)
+  {
+    let list = this.getById(id);
+    if (list[0].status === Status.done) {
+      list[0].status = Status.done;
+    }
+    else
+    {
+      list[0].status = Status.done;
+    }
+  }
+  pendingStatus(id: number)
+  {
+    let list = this.getById(id);
+    if (list[0].status === Status.pending) {
+      list[0].status = Status.pending;
+    }
+    else
+    {
+      list[0].status = Status.pending;
+    }
+  }
+
+  // delete todo from todos
+
+  onDeleteToDo(id:number)
+  {
+    this.lists = this.lists
+      .filter(list => list.id !== id);
+    return this;
   }
 }
