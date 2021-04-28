@@ -3,12 +3,14 @@ import { AddToDoComponent } from './shared/components/add-to-do/add-to-do.compon
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './shared/components/login/login.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch:'full'},
   {path: '',component: HomeComponent},
   {path: 'add-to-do',component: AddToDoComponent},
-  {path: 'edit/:id', component: MangeToDoComponent}
+  {path: 'edit/:id', component: MangeToDoComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { AddToDoComponent } from './shared/components/add-to-do/add-to-do.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './shared/pipes/search.pipe';
 import { MangeToDoComponent } from './shared/components/mange-to-do/mange-to-do.component';
+import { LoginComponent } from './shared/components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MangeToDoComponent } from './shared/components/mange-to-do/mange-to-do.
     AddToDoComponent,
     FilterPipe,
     MangeToDoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

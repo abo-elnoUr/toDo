@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <h3 style="margin: 20px auto">Login Page</h3>
+    <div class="main">
+      <div class="col-lg">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+          <div class="form-group" style="margin-bottom: 15px">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control ng-invalid"
+              [class.ng-valid]="email.valid && email.touched"
+              placeholder="write valid email"
+              id="email"
+              autocomplete="off"
+              name="email"
+              ngModel
+              #email="ngModel"
+              required
+              email
+            />
+            <div *ngIf="loginForm.submitted && email.invalid">
+              <small *ngIf="email.errors?.required">Email is required</small>
+              <small *ngIf="email.errors?.email">
+                Email must be a valid email address
+              </small>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 15px">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control ng-invalid"
+              [class.ng-valid]="password.valid && password.touched"
+              id="password"
+              placeholder="write complicated password"
+              autocomplete="off"
+              name="password"
+              ngModel
+              #password="ngModel"
+              required
+              minlength="4"
+            />
+            <div *ngIf="loginForm.submitted && password.invalid">
+              <small *ngIf="password.errors?.required"
+                >Password is required</small
+              >
+              <small *ngIf="password.errors?.minlength">
+                Password must be at least 4 chars
+              </small>
+            </div>
+          </div>
+          <div class="button-group" style="margin-bottom: 15px">
+            <button class="btn" style="margin-right: 10px" type="submit">
+              Login
+            </button>
+            <button class="btn signUp">SignUp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
