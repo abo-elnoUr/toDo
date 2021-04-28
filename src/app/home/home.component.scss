@@ -1,12 +1,4 @@
-.container {
-	display: inline-block;
-	margin-top: 50px;
-	width: 100%;
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
+
 
 .input-group {
 	display: flex;
@@ -131,6 +123,17 @@
 		line-height: 20px;
 		margin: 0 5px;
 		border-radius: 4px;
+    &pageNum
+    {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      &:hover {
+        background-color: #111;
+        color: #fff;
+      }
+    }
 		a {
 			display: block;
 			text-decoration: none;
@@ -146,19 +149,9 @@
 			font-size: 20px;
 		}
 	}
-	li.pageNum {
-		width: 20px;
-		height: 20px;
-		line-height: 20px;
-		text-align: center;
-		&:hover {
-			background-color: #333;
-			color: #fff;
-		}
-	}
 	li.pageNum.active {
 		a {
-			background-color: #333;
+			background-color: #111;
 			color: #fff;
 		}
 	}

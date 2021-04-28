@@ -28,14 +28,11 @@
             *ngFor="let list of lists | slice: start:end; let i = index"
           >
             <div class="input-group-text">
-              <form [formGroup]="toggleForm">
-                <input
-                  type="checkbox"
-                  (change)="toggleVisibility($event, list.id)"
-                  formControlName="toggle"
-                  [checked]="list.status == 1"
-                />
-              </form>
+              <input
+                type="checkbox"
+                (change)="toggleVisibility($event, list.id)"
+                [checked]="list.complete == true"
+              />
             </div>
 
             <!-- todo sample with unoreder list -->
@@ -109,7 +106,7 @@
 
         <div *ngIf="lists.length <= 0">
           <h4 style="letter-spacing: 2px; font-weight: 500">
-            No ToDos Added Please Add Some 💛🖤
+            No ToDos Please Add Some 💛🖤
           </h4>
         </div>
 
@@ -120,7 +117,7 @@
             <li class="prev"><a>&laquo;</a></li>
             <li
               *ngFor="let todo of numberArray(lists.length); let i = index"
-              class="pageNum active"
+              class="pageNum"
               (click)="changeNumber(i)"
             >
               <a>{{ i + 1 }}</a>

@@ -10,4 +10,5 @@ export interface ToDo{
   createdAt : Date;
   updatedAt : Date;
   deadline : Date;
+  complete : boolean;
 }

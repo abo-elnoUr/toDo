@@ -22,7 +22,8 @@ export class TodoService {
   //   status : Status.pending,
   //   createdAt : this.date,
   //   updatedAt : this.date,
-  //   deadline : this.date
+  //   deadline : this.date,
+  //   complete : false
   // },
   // {id: 2,
   //   title : 'play',
@@ -30,7 +31,8 @@ export class TodoService {
   //   status : Status.done,
   //   createdAt : this.date,
   //   updatedAt : this.date,
-  //   deadline : this.date
+  //   deadline : this.date,
+  //   complete : true
   // },
   // {id: 3,
   //   title : 'Sports',
@@ -38,9 +40,9 @@ export class TodoService {
   //   status : Status.missed,
   //   createdAt : this.date,
   //   updatedAt : this.date,
-  //   deadline : this.date
+  //   deadline : this.date,
+  //   complete : false
   // }
-
   ];
 
 
@@ -87,10 +89,12 @@ export class TodoService {
     let list = this.getById(id);
     if (list[0].status === Status.done) {
       list[0].status = Status.done;
+      list[0].complete = true;
     }
     else
     {
       list[0].status = Status.done;
+      list[0].complete = true;
     }
   }
   pendingStatus(id: number)
@@ -98,10 +102,12 @@ export class TodoService {
     let list = this.getById(id);
     if (list[0].status === Status.pending) {
       list[0].status = Status.pending;
+      list[0].complete = false;
     }
     else
     {
       list[0].status = Status.pending;
+      list[0].complete = false;
     }
   }
 

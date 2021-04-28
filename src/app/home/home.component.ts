@@ -18,25 +18,18 @@ export class HomeComponent implements OnInit {
   lists: ToDo[]=[];
   list: any = [];
   index : number = 0;
-  changeState : boolean = false;
   marked = false;
   usersArray: [] = [];
   search: string = '';
-  status : string = '';
   activeLinkStyle = 'line-through';
   start : number = 0;
   end : number = 3;
-  num:number[] = [];
+  division : number = 0;
+  remainder : number = 0;
   result : number = 0;
-  i : number = 0;
-  j : number = 0;
-  m : number = 0;
-  f : number = 0;
-
 
 
   constructor(private _ToDoService:TodoService, private _Router: Router) {
-
   }
 
   // froms in reactive form
@@ -44,11 +37,6 @@ export class HomeComponent implements OnInit {
   searchForm = new FormGroup({
     search : new FormControl()
   })
-
-  toggleForm = new FormGroup({
-    toggle : new FormControl(null)
-  })
-
 
 
   ngOnInit(): void {
@@ -91,13 +79,10 @@ export class HomeComponent implements OnInit {
 
   getToDoBySearch(list: ToDo[],word: string)
   {
-    if (list.length === 0) {
-      return list;
-    }
     const searchArray = [];
     for (let item of list)
     {
-      if (item['title'].includes(word))
+      if (item.title.toLocaleLowerCase().includes(word.toLocaleLowerCase()))
       {
         searchArray.push(item);
       }
@@ -139,13 +124,16 @@ export class HomeComponent implements OnInit {
 
   numberArray(length: number)
   {
-    this.i = length / 3;
-    this.j = length % 3;
-    this.m = Math.round(this.i);
-    if (this.j <= 5) {
-      this.f = this.m + 1;
+    this.division = Math.trunc(length / 3);
+    this.remainder = length % 3;
+    if (this.remainder > 0) {
+      this.result = this.division + 1;
     }
-    return new Array(this.f)
+    else
+    {
+      this.result = this.division;
+    }
+    return new Array(this.result)
   }
 
   changeNumber(number : number)

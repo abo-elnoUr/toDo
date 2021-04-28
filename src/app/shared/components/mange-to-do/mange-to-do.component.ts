@@ -88,12 +88,19 @@ export class MangeToDoComponent implements OnInit {
 
   onUpdate()
   {
+    if (this.listForm.value.status == 1) {
+      this.listForm.value.complete = true;
+    }
+    else
+    {
+      this.listForm.value.complete = false;
+    }
     this.listForm.value.status = parseInt(this.listForm.value.status);
     this._ToDoService.updateList(this.currentId, this.listForm.value);
     this.lists = this._ToDoService.getToDos();
     this._ToDoService.insertedList.subscribe(result => {
       this.lists = result;
     })
-    this._Router.navigate(['/'])
+    this._Router.navigate(['/']);
   }
 }

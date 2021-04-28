@@ -1,6 +1,6 @@
 
 
-@import "https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap";
+
 * {
 	padding: 0;
 	margin: 0;
@@ -32,6 +32,8 @@ nav {
 				padding: 7px 13px;
         &.active {
           color: #111 !important;
+          font-weight: 700;
+          letter-spacing: 2px;
         }
         &:hover
         {
@@ -40,45 +42,43 @@ nav {
 			}
 		}
 	}
-}
-label.logo {
-	color: #fff;
-	font-size: 30px;
-	line-height: 50px;
-	padding: 0 100px;
-	font-weight: bold;
-	a {
-		color: #fff;
-	}
+  label.logo {
+    color: #fff;
+    font-size: 30px;
+    line-height: 50px;
+    padding: 0 100px;
+    font-weight: bold;
+    a {
+      color: #fff;
+    }
+  }
+  #check {
+    display: none;
+  }
+  .checkbtn {
+    font-size: 30px;
+    color: #fff;
+    float: right;
+    line-height: 50px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+    margin-top: 15px;
+    span {
+      display: block;
+      width: 33px;
+      height: 4px;
+      margin-bottom: 5px;
+      position: relative;
+      background: #cdcdcd;
+      border-radius: 3px;
+      z-index: 1;
+      transform-origin: 4px 0;
+      transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.55s ease;
+    }
+  }
 }
 
-
-
-.checkbtn {
-	font-size: 30px;
-	color: #fff;
-	float: right;
-	line-height: 50px;
-	margin-right: 40px;
-	cursor: pointer;
-	display: none;
-	margin-top: 15px;
-	span {
-		display: block;
-		width: 33px;
-		height: 4px;
-		margin-bottom: 5px;
-		position: relative;
-		background: #cdcdcd;
-		border-radius: 3px;
-		z-index: 1;
-		transform-origin: 4px 0;
-		transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.55s ease;
-	}
-}
-#check {
-	display: none;
-}
 @media (max-width: 992px) {
 	label.logo {
 		font-size: 30px;
@@ -95,19 +95,14 @@ label.logo {
 	}
 }
 @media (max-width: 600px) {
-	.checkbtn {
-		display: block;
-	}
-	ul {
-		position: fixed;
+	nav {
+		ul {
+      position: fixed;
 		width: 100%;
 		background-color: #444;
 		top: -900px;
 		left: 0;
 		transition: all .5s ease;
-	}
-	nav {
-		ul {
 			li {
 				display: block;
 				a {
@@ -121,16 +116,18 @@ label.logo {
         }
 			}
 		}
-	}
-
-	#check {
-		&:checked {
-			~ {
-				ul {
-					top: 50px;
-					transition: all .5s ease;
-				}
-			}
-		}
+    .checkbtn {
+      display: block;
+    }
+    #check {
+      &:checked {
+        ~ {
+          ul {
+            top: 50px;
+            transition: all .5s ease;
+          }
+        }
+      }
+    }
 	}
 }
