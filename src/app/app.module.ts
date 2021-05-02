@@ -1,3 +1,4 @@
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './shared/pipes/search.pipe';
 import { MangeToDoComponent } from './shared/components/mange-to-do/mange-to-do.component';
 import { LoginComponent } from './shared/components/login/login.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,8 +30,9 @@ import { LoginComponent } from './shared/components/login/login.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
-  providers: [TodoService],
+  providers: [TodoService, {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

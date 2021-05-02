@@ -1,3 +1,4 @@
+import { AuthGuard } from './core/services/auth.guard';
 import { MangeToDoComponent } from './shared/components/mange-to-do/mange-to-do.component';
 import { AddToDoComponent } from './shared/components/add-to-do/add-to-do.component';
 import { NgModule } from '@angular/core';
@@ -7,9 +8,9 @@ import { LoginComponent } from './shared/components/login/login.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/', pathMatch:'full'},
-  {path: '',component: HomeComponent},
-  {path: 'add-to-do',component: AddToDoComponent},
-  {path: 'edit/:id', component: MangeToDoComponent},
+  {path: '',component: HomeComponent, canActivate : [AuthGuard]},
+  {path: 'add-to-do',component: AddToDoComponent, canActivate : [AuthGuard]},
+  {path: 'edit/:id', component: MangeToDoComponent, canActivate : [AuthGuard]},
   {path: 'login', component: LoginComponent}
 ];
 

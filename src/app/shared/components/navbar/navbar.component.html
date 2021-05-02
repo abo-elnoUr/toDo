@@ -77,7 +77,7 @@
   <ul>
     <li>
       <a
-        class=""
+        *ngIf="isAuth"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         aria-current="page"
@@ -86,7 +86,15 @@
       >
     </li>
     <li>
-      <a class="" routerLinkActive="active" routerLink="add-to-do">Add ToDo</a>
+      <a *ngIf="isAuth" routerLinkActive="active" routerLink="add-to-do"
+        >Add ToDo</a
+      >
+    </li>
+    <li>
+      <a *ngIf="!isAuth" routerLinkActive="active" routerLink="login">Login</a>
+    </li>
+    <li>
+      <button class="btn" (click)="logout()" *ngIf="isAuth">Logout</button>
     </li>
   </ul>
 </nav>

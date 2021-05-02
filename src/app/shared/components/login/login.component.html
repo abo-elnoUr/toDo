@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <div *ngIf="err">
+      <p>{{ err }}</p>
+    </div>
     <h3 style="margin: 20px auto">Login Page</h3>
     <div class="main">
       <div class="col-lg">
