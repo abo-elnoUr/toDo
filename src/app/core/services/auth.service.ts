@@ -34,12 +34,12 @@ export class AuthService {
       {
         return [];
       }
-    }),tap(resData => {
+    },catchError(this.error)),tap(resData => {
       this.auth(
         resData[0].email,
         resData[0].username,
       );
-    }),catchError(this.error))
+    }))
   }
 
   private auth(

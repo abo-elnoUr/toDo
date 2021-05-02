@@ -1,6 +1,24 @@
+.main
+{
+  width: 50% !important;
+  margin: 15px auto;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  height: calc(100% + 50px);
+  display: grid;
+  align-content: center;
+}
 
 .row
 {
+  display: grid;
+  grid-template-columns: 1fr;
+  .col-lg
+  {
+    width: 100% !important;
+  }
+
   h3
   {
     color: #555;
@@ -9,8 +27,6 @@
   }
 }
 
-
-
 .form-group
 {
   .form-label
@@ -18,45 +34,33 @@
     font-weight: 500;
     color: #333;
   }
-}
-
-.form-control {
-  width: 100%;
-  padding: 6px 12px;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #222;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  &:focus
-  {
+  .form-control {
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
     color: #222;
-    border-color: #777;
-    outline: 0;
-    box-shadow: 5px 0 10px 3px rgba(55, 126, 233, 0.5);
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    &:focus
+    {
+      color: #222;
+      border-color: #777;
+      outline: 0;
+      box-shadow: 5px 0 10px 3px rgba(55, 126, 233, 0.5);
+    }
   }
-}
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948;
+  }
 
-
-.form-select {
-  display: block;
-  width: 100%;
-  padding: 6px 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #222;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 4px;
-}
-
-.button-group
-{
-  display: flex;
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442;
+  }
 }
 
 .btn {
@@ -80,57 +84,8 @@
   }
 }
 
-.signUp
-{
-  background-color: #1a7c7b;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	border: none;
-	padding: 6px 12px;
-	border-radius: 4px;
-	transition: all .25s ease;
-  &:disabled
-  {
-    cursor: not-allowed;
-  }
-}
 
 
-.row
-{
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-
-.col-lg
-{
-  width: 100% !important;
-}
-
-
-.main
-{
-  width: 50% !important;
-  margin: 15px auto;
-  border-radius: 6px;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  height: calc(100% + 50px);
-  display: grid;
-  align-content: center;
-}
-
-
-
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948;
-}
-
-.ng-invalid:not(form)  {
-  border-left: 5px solid #a94442;
-}
 
 
 @media (max-width: 660px) {

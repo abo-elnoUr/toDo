@@ -26,10 +26,12 @@ export class LoginComponent implements OnInit {
       this.submitted = true;
       this._AuthService.login(loginForm.value.email, loginForm.value.password).subscribe((data) => {
         this.userData = data;
-        this._Router.navigate(['/']);
+          this._Router.navigate(['/']);
+
       }, err => {
         console.log(err);
         this.err = err;
+        this._Router.navigate(['/login']);
       })
     }
     loginForm.reset();
