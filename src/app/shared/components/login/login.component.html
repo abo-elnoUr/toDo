@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <div *ngIf="err">
-      <p>{{ err }}</p>
-    </div>
     <h3 style="margin: 20px auto">Login Page</h3>
     <div class="main">
+      <div style="margin: 0 !important; text-align: center" *ngIf="err">
+        <p style="margin: 0 !important; color: red">{{ err }}</p>
+      </div>
       <div class="col-lg">
         <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
           <div class="form-group" style="margin-bottom: 15px">
@@ -53,11 +53,9 @@
               </small>
             </div>
           </div>
-          <!-- <div class="button-group" style="margin-bottom: 15px"> -->
           <button class="btn" style="margin-right: 10px" type="submit">
             Login
           </button>
-          <!-- </div> -->
         </form>
       </div>
     </div>

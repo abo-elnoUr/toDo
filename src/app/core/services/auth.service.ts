@@ -3,10 +3,10 @@ import { UserModel } from './../../shared/components/login/userModel';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './../../shared/models/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 
 
@@ -16,39 +16,33 @@ import { throwError } from 'rxjs';
 export class AuthService {
   user = new BehaviorSubject<any>(null);
 
+  get isAuth()
+  {
+    return localStorage.getItem('userData') ? true : false;
+  }
 
-  private credentials = {
+  private credentials = [{
     email: 'aboelnour@gmail.com',
     password: '123456',
     username: 'aboelnour'
-  }
+  }]
   constructor(private _HttpClient: HttpClient, private _Router: Router) {
    }
 
-  login(email: string, password: string)  {
-    return this._HttpClient.get<User[]>('http://localhost:3000/user').pipe(map((result) => {
-      if (result[0].email === this.credentials.email && result[0].password === this.credentials.password) {
-        return result;
-      }
-      else
-      {
-        return [];
-      }
-    },catchError(this.error)),tap(resData => {
-      this.auth(
-        resData[0].email,
-        resData[0].username,
-      );
-    }))
-  }
-
-  private auth(
-    email: string,
-    username: string,
-  ) {
-    const user = new UserModel(email, username);
-    this.user.next(user);
-    localStorage.setItem('userData', JSON.stringify(user));
+  login(email: string, password: string)
+  {
+    if(email === this.credentials[0].email && password === this.credentials[0].password)
+    {
+      const user = new UserModel(email, this.credentials[0].username);
+      this.user.next(user);
+      localStorage.setItem('userData', JSON.stringify(user));
+      return of(this.credentials);
+    }
+    else
+    {
+      catchError(this.error);
+      return of({});
+    }
   }
 
   autoLogin() {
@@ -78,7 +72,7 @@ export class AuthService {
 
   private error(errorRes: HttpErrorResponse) {
     let errorMsg = 'username or password wrong';
-    if (!errorRes.error || !errorRes.error.error) {
+    if (errorRes.error) {
       return throwError(errorMsg);
     }
     return throwError(errorMsg);

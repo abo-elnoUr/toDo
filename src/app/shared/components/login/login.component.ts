@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
   {
     if (loginForm.valid) {
       this.submitted = true;
-      this._AuthService.login(loginForm.value.email, loginForm.value.password).subscribe((data) => {
-        this.userData = data;
+      this._AuthService.login(loginForm.value.email, loginForm.value.password).subscribe(() => {
           this._Router.navigate(['/']);
 
       }, err => {
@@ -34,6 +33,8 @@ export class LoginComponent implements OnInit {
         this._Router.navigate(['/login']);
       })
     }
+
+      this.err = 'username or password wrong';
     loginForm.reset();
   }
 
