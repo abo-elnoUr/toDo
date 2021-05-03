@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { UserModel } from './../../shared/components/login/userModel';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
