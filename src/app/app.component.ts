@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'todo';
+  environment : string = '';
   constructor(private _AuthService:AuthService)
   {
 
@@ -15,5 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit()
   {
     this._AuthService.autoLogin();
+    this.environment = environment.environment;
+    console.log(this.environment);
   }
 }
