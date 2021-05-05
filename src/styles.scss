@@ -14,4 +14,48 @@
 	margin-left: auto;
 }
 
+.form-control {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #222;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  &:focus
+  {
+    color: #222;
+    border-color: #777;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(55, 126, 233, 0.5);
+  }
+}
 
+.btn {
+
+  background-color: #2ab652;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	transition: all .25s ease;
+  &:disabled
+  {
+    cursor: not-allowed;
+  }
+}
+
+.row
+{
+  display: grid;
+	grid-gap: 20px;
+}
+
+.col-lg
+{
+  width: 100% !important;
+}

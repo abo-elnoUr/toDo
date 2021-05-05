@@ -4,58 +4,15 @@
   width: 50% !important;
   margin: 15px auto;
 
-.form-control {
-  width: 100%;
-  padding: 6px 12px;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #222;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 4px;
-  &:focus
-  {
-    color: #222;
-    border-color: #777;
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(55, 126, 233, 0.5);
-  }
-}
-
-.btn {
-
-  background-color: #2a9fb6;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	border: none;
-	padding: 6px 12px;
-	border-radius: 4px;
-	transition: all .25s ease;
-  &:disabled
-  {
-    cursor: not-allowed;
-  }
-}
-
 .row
 {
-  display: flex;
-  flex-wrap: wrap;
-  .col-lg
-  {
-    flex: 0 0 auto;
-    width: 100%;
-  }
+  grid-template-columns: 1fr;
 }
 }
-
 @media (max-width: 660px) {
   .main
-{
-  width: 100% !important;
-}
-
+  {
+    width: 100% !important;
+  }
 }
 

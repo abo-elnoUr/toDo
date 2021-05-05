@@ -25,6 +25,10 @@ nav {
 			display: inline-block;
 			line-height: 50px;
 			margin: 0 5px;
+      .btn
+      {
+        padding: 6px 12px
+      }
 			a {
 				color: #fff;
 				font-size: 17px;
@@ -40,26 +44,7 @@ nav {
           color: #999 !important;
         }
 			}
-      .btn
-      {
-        background-color: #161c17;
-        text-align: center;
-        text-decoration: none;
-        cursor: pointer;
-        border: none;
-        color: #fff;
-        padding: 6px 12px;
-        border-radius: 4px;
-        transition: all .25s ease;
-        &:disabled
-        {
-          cursor: not-allowed;
-        }
-        &:hover {
-          background-color: #fff;
-          color: #000;
-        }
-      }
+
 		}
 	}
   label.logo {
