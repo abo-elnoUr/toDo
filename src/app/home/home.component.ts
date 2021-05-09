@@ -1,9 +1,12 @@
+import { Todo } from './../shared/models/todo-state.model';
 import { TodoService } from './../core/services/todo.service';
 import { Component, OnInit } from '@angular/core';
 import { ToDo } from '../shared/models/todo.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -16,6 +19,7 @@ export class HomeComponent implements OnInit {
   // declartion
 
   lists: ToDo[]=[];
+  listsStore : Observable<{todo : ToDo[]}> = of();
   list: any = [];
   index : number = 0;
   marked = false;
@@ -29,7 +33,7 @@ export class HomeComponent implements OnInit {
   result : number = 0;
 
 
-  constructor(private _ToDoService:TodoService, private _Router: Router) {
+  constructor(private _ToDoService:TodoService, private _Router: Router, private _Store:Store<{todo: {todo : Todo[]}}>) {
   }
 
   // froms in reactive form
@@ -42,6 +46,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // get all todos
 
+    this.listsStore = this._Store.select('todo');
+    console.log(this.listsStore)
     this.lists = this._ToDoService.getToDos();
     this._ToDoService.insertedList.subscribe(result => {
       this.lists = result;

@@ -21,6 +21,11 @@ export class AuthService {
     return localStorage.getItem('userData') ? true : false;
   }
 
+  get userData()
+  {
+    return of(JSON.parse(localStorage.getItem('userData') as string));
+  }
+
   private credentials = [{
     email: 'aboelnour@gmail.com',
     password: '123456',

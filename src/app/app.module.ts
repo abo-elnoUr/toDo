@@ -12,6 +12,8 @@ import { FilterPipe } from './shared/pipes/search.pipe';
 import { LoginComponent } from './shared/components/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import * as ToDoReducer from './core/store/todo.reducer';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({todo: ToDoReducer.Reducer})
   ],
   providers: [TodoService, {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true}],
   bootstrap: [AppComponent]
