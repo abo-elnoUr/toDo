@@ -20,12 +20,15 @@
     <div class="row">
       <div class="col-lg">
         <h3 style="margin-bottom: 10px">ToDo Lists</h3>
-        <div *ngIf="lists.length > 0">
+        <div *ngIf="listsStore">
           <!-- show all todo lists -->
 
           <div
             class="input-group"
-            *ngFor="let list of lists | slice: start:end; let i = index"
+            *ngFor="
+              let list of (listsStore2 | async).todo | slice: start:end;
+              let i = index
+            "
           >
             <div class="input-group-text">
               <input
@@ -104,7 +107,7 @@
 
         <!-- if no todos return -->
 
-        <div *ngIf="lists.length <= 0">
+        <div *ngIf="!listsStore">
           <h4 style="letter-spacing: 2px; font-weight: 500">
             No ToDos Please Add Some 💛🖤
           </h4>
@@ -112,11 +115,11 @@
 
         <!-- pagination -->
 
-        <div *ngIf="lists.length > 0">
+        <div *ngIf="listsStore">
           <ul style="margin: 10px auto" class="pagination">
             <li class="prev"><a>&laquo;</a></li>
             <li
-              *ngFor="let todo of numberArray(lists.length); let i = index"
+              *ngFor="let todo of numberArray(listsStore.length); let i = index"
               class="pageNum"
               (click)="changeNumber(i)"
             >

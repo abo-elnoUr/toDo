@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgModel } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoService } from 'src/app/core/services/todo.service';
 import { ToDo } from '../../models/todo.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Todo } from '../../models/todo-state.model';
 
 
 
@@ -15,7 +17,7 @@ export class MangeToDoComponent implements OnInit {
 
   // declartion
 
-  lists: ToDo[]=[];
+  lists;
   id;
   submitted : boolean = false;
   currentId : number = 0;
@@ -23,7 +25,7 @@ export class MangeToDoComponent implements OnInit {
 
 
 
-  constructor(private _ToDoService:TodoService, private _ActivatedRoute:ActivatedRoute, private _Router: Router) {
+  constructor(private _ToDoService:TodoService, private _ActivatedRoute:ActivatedRoute, private _Router: Router, private _Store:Store<{todo: {todo : Todo[]}}>) {
 
     // get id from url
 
@@ -55,21 +57,6 @@ export class MangeToDoComponent implements OnInit {
     // get current todo of active id to show and edit
 
     this.lists = this._ToDoService.getById(this.currentId);
-    // for(let s =0; s< this.lists.length; s++)
-    // {
-    //   if (this.lists[s].status === 0)
-    //   {
-    //     this.status = 'pending';
-    //   }
-    //   if (this.lists[s].status === 1)
-    //   {
-    //     this.status = 'done';
-    //   }
-    //   if(this.lists[s].status === 2)
-    //   {
-    //     this.status = 'missed';
-    //   }
-    // }
 
     // to assign values to each input in form
 

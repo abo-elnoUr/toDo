@@ -19,7 +19,8 @@ export class HomeComponent implements OnInit {
   // declartion
 
   lists: ToDo[]=[];
-  listsStore : Observable<{todo : ToDo[]}> = of();
+  listsStore2 : Observable<{todo : Todo[]}>;
+  listsStore;
   list: any = [];
   index : number = 0;
   marked = false;
@@ -46,8 +47,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // get all todos
 
-    this.listsStore = this._Store.select('todo');
-    console.log(this.listsStore)
+    this.listsStore2 = this._Store.select('todo');
+
+    this._Store.select('todo').subscribe((todo) => {
+      this.listsStore = todo.todo as ToDo[];
+    })
     this.lists = this._ToDoService.getToDos();
     this._ToDoService.insertedList.subscribe(result => {
       this.lists = result;

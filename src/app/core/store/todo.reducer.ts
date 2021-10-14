@@ -3,29 +3,38 @@ import { Todo } from 'src/app/shared/models/todo-state.model';
 import * as ToDoAction from './todo.action';
 import { createReducer, on, Action } from '@ngrx/store';
 
-export interface TodoState{
-  todo: Todo[];
+// export interface TodoState {
+  // id: number;
+  // title : string;
+  // description : string;
+  // status : Status;
+  // createdAt : Date;
+  // updatedAt : Date;
+  // deadline : Date;
+  // complete : boolean;
+  // todo : Todo
+// }
+
+export interface TodoState {
+  todo : Todo[]
 }
 
-export const initialState : TodoState = {
-  todo: [new Todo(1,'study','Start study Tomorrow',Status.pending,new Date(),new Date(),new Date(),false)]
+ const initialState : TodoState = {
+  todo: [new Todo(1,'hello','Start',Status.pending,new Date(),new Date(),new Date(),false),new Todo(2,'hello again','Start end',Status.pending,new Date(),new Date(),new Date(),false)]
 };
 
 
- const todoReducer = createReducer(
-  initialState,
-  on(ToDoAction.addTodo, (state, {payload}) => {
-    return {
-      ...state,
-      todo: [...state.todo,payload]
-    }
-  })
-
-)
-
-export function Reducer (state: TodoState | undefined,action: Action )
+interface Actions
 {
-  return todoReducer(state, action)
+  type : string,
+  payload : Todo
 }
 
+export const Reducer = createReducer(initialState,
+  on(ToDoAction.addTodo, (state = initialState, action: Actions) => ({
+    ...state,
+    ingredients: [...state.todo, action.payload]
+  }))
+
+  )
 
